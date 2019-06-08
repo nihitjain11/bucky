@@ -35,7 +35,7 @@ function chatbot(balance,msg){
     var para = document.createElement('div');
     balance = parseInt(balance);
     
-    if(msg[0]=="Receive")
+    if(msg[0]=="Saved")
     {
         balance = balance+parseInt(x);
         var text = document.createTextNode("Your balance amount is updated: "+balance);
