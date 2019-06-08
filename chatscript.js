@@ -13,41 +13,50 @@ if (localStorage.getItem("balance")==null){
     localStorage.setItem("balance",prompt("Hi there! Please enter the initial balance"))
 }
 
-if (localStorage.getItem("history")==null){
-    localStorage.setItem("history",[])
+if (localStorage.getItem("summary")==null){
+    localStorage.setItem("summary",)
 }
 
 // console.log(localStorage.getItem("balance"))
 var msg;
-document.getElementById("compose-area").onkeyup = function() {
+var entry;
+document.getElementById("sendButton").onclick = function() {
     msg = document.getElementById("composer").value
-    chatbot(msg)
+    console.log('sending message to chatbot')
+    chatbot(localStorage.getItem("balance"),msg)
 }
 
-function chatbot(msg) {
-    div = document.getElementById("chat-area").createElement('div')
+var entry;
+
+function chatbot(balance,msg){
+    msg = msg.split(" ");
+    var x = msg[1];
+    var elem = document.getElementById("chat-area");
+    var para = document.createElement('div');
+    balance = parseInt(balance);
     
-}
-
-function receiveMoney(balance,msg,history){
-    msg = msg.split(" ")
     if(msg[0]=="Receive")
     {
-        var x=msg[1];
-        balance=balance+x;
-        setTimeout(2000);
-        document.getElementById()("Your updated amount is:"+balance);
-        history=[{"amount":balance,"type":"Credit"}];
+        balance = balance+parseInt(x);
+        var text = document.createTextNode("Your balance amount is updated: "+balance);
+        entry = [{"amount":balance,"type":"Credit"}];
     }
-}
-
-function spendMoney(balance,msg,history){
+    
     if(msg[0]=="Spent")
     {
-        var x=msg[1];
-        balance=balance-x;
-        setTimeout(2000);
-        console.log("Your updated amount is:"+balance);
-        history=[{"amount":balance,"type":"Debit"}];
+        balance = balance-parseInt(x);
+        var text = document.createTextNode("Your spent some money, your updated balance is: "+balance);
+        entry  = [{"amount":balance,"type":"Debit"}];
     }
+    
+    var summary = localStorage.getItem("summary");
+    //summary.push(entry)
+    //setTimeout(2000);
+
+    para.appendChild(text);
+    elem.appendChild(para);
+    
+    localStorage.setItem('balance',balance);
+    localStorage.setItem('summary',summary);
+    
 }
